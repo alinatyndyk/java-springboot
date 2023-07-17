@@ -1,9 +1,11 @@
 package com.example.javaspringboot.controllers;
 
-import com.example.javaspringboot.dao.CarDAO;
+import com.example.javaspringboot.dto.CarDTO;
 import com.example.javaspringboot.models.Car;
+import com.example.javaspringboot.services.CarsService;
+import com.example.javaspringboot.views.ViewsCar;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,37 +17,40 @@ import java.util.List;
 public class CarController {
 
     //    @Autowired
-    private CarDAO carDAO;
+    private CarsService carsService;
 
     @GetMapping()
+    @JsonView(ViewsCar.SL3.class)
     public ResponseEntity<List<Car>> getAll() {
-        return new ResponseEntity<>(carDAO.findAll(), HttpStatus.ACCEPTED);
+        return carsService.getAll();
     }
 
     @GetMapping("/brands/{brand}")
+    @JsonView(ViewsCar.SL2.class)
     public ResponseEntity<List<Car>> getByBrand(@PathVariable("brand") String brand) {
-        return new ResponseEntity<>(carDAO.findByBrand(brand), HttpStatus.ACCEPTED);
+        return carsService.getByBrand(brand);
     }
 
     @GetMapping("/power/{power}")
+    @JsonView(ViewsCar.SL2.class)
     public ResponseEntity<List<Car>> getByPower(@PathVariable("power") int power) {
-        return new ResponseEntity<>(carDAO.findByPower(power), HttpStatus.ACCEPTED);
+        return carsService.getByPower(power);
     }
 
     @GetMapping("/{id}")
+    @JsonView(ViewsCar.SL1.class)
     public ResponseEntity<Car> getById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(carDAO.findById(id).get(), HttpStatus.ACCEPTED);
+        return carsService.getById(id);
     }
 
     @PostMapping()
-    public ResponseEntity<Car> post(@RequestBody Car car) {
-        return new ResponseEntity<>(carDAO.save(car), HttpStatus.ACCEPTED);
+    public ResponseEntity<Car> post(@RequestBody CarDTO car) {
+        return carsService.post(car);
     }
 
     @DeleteMapping()
     public ResponseEntity<List<Car>> deleteById(@RequestParam("id") int id) {
-        carDAO.deleteById(id);
-        return new ResponseEntity<>(carDAO.findAll(), HttpStatus.GONE);
+        return carsService.deleteById(id);
     }
 
 }
