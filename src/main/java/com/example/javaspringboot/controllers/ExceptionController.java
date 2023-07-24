@@ -14,4 +14,9 @@ public class ExceptionController {
     public ResponseEntity<String> blankNameException(MethodArgumentNotValidException e) {
         return new ResponseEntity<>(e.getFieldError().getDefaultMessage(), HttpStatusCode.valueOf(500));
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> blankNameException(ConstraintViolationException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(500));
+    }
 }

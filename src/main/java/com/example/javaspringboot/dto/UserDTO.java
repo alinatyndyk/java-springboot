@@ -11,5 +11,7 @@ import lombok.ToString;
 public class UserDTO {
 
     private String userName;
+    private String picture;
+    private String email;
 
 }
