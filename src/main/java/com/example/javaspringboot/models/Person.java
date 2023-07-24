@@ -1,12 +1,13 @@
 package com.example.javaspringboot.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.stereotype.Component;
 
 @Document()
 @Data
+@NoArgsConstructor
 public class Person {
         @Id
         private String id;

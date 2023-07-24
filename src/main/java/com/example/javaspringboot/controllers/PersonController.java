@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/person")
-//@AllArgsConstructor
+@AllArgsConstructor
 public class PersonController {
-    @Autowired
+
     private PersonService personService;
 
-//    public PersonController(PersonService personService) {
-//        this.personService = personService;
-//    }
-
-    @PostMapping("/")
+    @PostMapping()
     public void createUser(@RequestBody Person person) {
         personService.savePerson(person);
     }
