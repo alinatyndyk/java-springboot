@@ -9,10 +9,13 @@ import com.example.javaspringboot.services.UsersServiceMongoImpl;
 import com.example.javaspringboot.services.UsersServiceMySQLImpl;
 import com.example.javaspringboot.views.ViewsUser;
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,20 +41,21 @@ public class UserController {
     @SneakyThrows
     @GetMapping()
     @JsonView(ViewsUser.NoSL.class)
-    public ResponseEntity<List<UserDTO>> getAll() {
+    public ResponseEntity<List<User>> getAll() { // HttpServletRequest request userDTO not USER
 
+//        mailerService.sendEmail("alinatyndyk777@gmail.com", EMail.USERS, new HashMap<>());
 
-        mailerService.sendEmail("alinatyndyk777@gmail.com", EMail.USERS, new HashMap<>());
-
-        return usersServiceMySQL.getAll();
+        return usersServiceMySQL.getAllX();
     }
+
 
     @GetMapping("/sl1")
     @JsonView(ViewsUser.SL1.class)
-    public ResponseEntity<List<UserDTO>> getAllSL1() {
+    public ResponseEntity<List<User>> getAllSL1() {
         return usersServiceMySQL.getAllSL1();
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getById(@PathVariable("id") int id) {
         return usersServiceMySQL.getById(String.valueOf(id));

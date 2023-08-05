@@ -11,7 +11,7 @@ public interface UsersService {
 
     public ResponseEntity<List<UserDTO>> getAll();
 
-    public ResponseEntity<List<UserDTO>> getAllSL1();
+//    public ResponseEntity<List<UserDTO>> getAllSL1();
 
     public ResponseEntity<UserDTO> getById(String id);
 

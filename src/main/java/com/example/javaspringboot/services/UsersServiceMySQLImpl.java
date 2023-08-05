@@ -3,6 +3,7 @@ package com.example.javaspringboot.services;
 import com.example.javaspringboot.dao.UserDAO;
 import com.example.javaspringboot.dto.UserDTO;
 import com.example.javaspringboot.models.User;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
@@ -25,23 +26,47 @@ public class UsersServiceMySQLImpl implements UsersService {
 
         List<UserDTO> responseUsers = new ArrayList<>();
         List<User> users = userDAO.findAll();
+        System.out.println(users);
+        System.out.println("users*******************************");
         users.forEach(userMD -> responseUsers.add(new UserDTO(
                 userMD.getName(),
                 userMD.getEmail(),
                 userMD.getAvatar())));
+        System.out.println(responseUsers);
         return new ResponseEntity<>(responseUsers, HttpStatus.ACCEPTED);
     }
 
-    public ResponseEntity<List<UserDTO>> getAllSL1() {
+    public ResponseEntity<List<User>> getAllX() { //delete
+
+        List<UserDTO> responseUsers = new ArrayList<>();
+        List<User> users = userDAO.findAll();
+        System.out.println(users);
+        System.out.println("users*******************************");
+        return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
+    }
+
+    public ResponseEntity<List<UserDTO>> getAllWithAPI(HttpServletRequest request) {
+
+        String ipAddress = request.getHeader("X-Forwarded-For");
+        if (ipAddress == null) {
+            ipAddress = request.getRemoteAddr();
+        }
+
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("access_token", "hjds76sd767636733267");
+        httpHeaders.add("IP_ADDRESS", ipAddress);
+
         List<UserDTO> responseUsers = new ArrayList<>();
         List<User> users = userDAO.findAll();
         users.forEach(userMD -> responseUsers.add(new UserDTO(
                 userMD.getName(),
                 userMD.getEmail(),
                 userMD.getAvatar())));
-        return new ResponseEntity<>(responseUsers, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(responseUsers, httpHeaders, HttpStatus.ACCEPTED);
+    }
+
+    public ResponseEntity<List<User>> getAllSL1() {
+        List<User> users = userDAO.findAll();
+        return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
     }
 
     public ResponseEntity<UserDTO> getById(String id) {
