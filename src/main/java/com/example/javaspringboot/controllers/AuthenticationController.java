@@ -1,9 +1,9 @@
 package com.example.javaspringboot.controllers;
 
-import com.example.javaspringboot.dto.UserDTO;
-import com.example.javaspringboot.models.AuthenticationResponse;
-import com.example.javaspringboot.models.LoginRequest;
-import com.example.javaspringboot.models.RegisterRequest;
+import com.example.javaspringboot.models.requests.RefreshRequest;
+import com.example.javaspringboot.models.responses.AuthenticationResponse;
+import com.example.javaspringboot.models.requests.LoginRequest;
+import com.example.javaspringboot.models.requests.RegisterRequest;
 import com.example.javaspringboot.services.AuthenticationService;
 import com.example.javaspringboot.services.UsersServiceMySQLImpl;
 import lombok.AllArgsConstructor;
@@ -34,6 +34,12 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login (@RequestBody LoginRequest loginRequest) {
+        System.out.println(loginRequest);
         return ResponseEntity.ok(authenticationService.login(loginRequest));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthenticationResponse> refresh (@RequestBody RefreshRequest refreshRequest) {
+        return ResponseEntity.ok(authenticationService.refresh(refreshRequest));
     }
 }

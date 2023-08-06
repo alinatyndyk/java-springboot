@@ -1,4 +1,4 @@
-package com.example.javaspringboot.models;
+package com.example.javaspringboot.models.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

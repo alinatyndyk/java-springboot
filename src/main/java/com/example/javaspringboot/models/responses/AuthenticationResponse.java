@@ -1,4 +1,4 @@
-package com.example.javaspringboot.models;
+package com.example.javaspringboot.models.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AuthenticationResponse {
     private String accessToken;
+    private String refreshToken;
 }

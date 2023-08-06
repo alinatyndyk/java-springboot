@@ -45,6 +45,8 @@ public class User implements UserDetails {
 
     private ERole role;
 
+    private String refreshToken;
+
     private Boolean isActivated = false;
 
     public User(String name, String email, String avatar, String password) {
@@ -67,7 +69,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
